@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants">
+
+    <LinearLayout
+        android:id="@+id/ll_weather"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/feisro"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/item_cityname"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:textColor="#000000"
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/item_weatherstate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_weathertemperature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/item_weatherdata"
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:textColor="#000000" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/item_sendibletemperature"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:background="@drawable/item"
+                android:gravity="center"
+                android:text="体感温度" />
+            <TextView
+                android:id="@+id/tv_sendibletemperature"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:textStyle="bold"
+                android:layout_height="match_parent"
+                android:background="@drawable/item"
+                android:gravity="center"
+                android:text="10 C"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/item_winddirection"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:background="@drawable/item"
+                android:text="风向" />
+            <TextView
+                android:id="@+id/tv_winddirection"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:background="@drawable/item"
+                android:gravity="center"
+                android:text="10 C"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/item_windpower"
+                android:layout_width="0dp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@drawable/item"
+                android:text="风力" />
+            <TextView
+                android:id="@+id/tv_windpower"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="match_parent"
+                android:background="@drawable/item"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="10 C"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/item_windsnowdrift"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@drawable/item"
+                android:text="风速" />
+            <TextView
+                android:id="@+id/tv_windsnowdrift"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:textStyle="bold"
+                android:layout_height="match_parent"
+                android:background="@drawable/item"
+                android:gravity="center"
+                android:text="10 C"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+        >
+            <TextView
+                android:id="@+id/item_relativehumidity"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:background="@drawable/item"
+                android:text="相对湿度" />
+            <TextView
+                android:id="@+id/tv_relativehumidity"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="match_parent"
+                android:background="@drawable/item"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="10 C"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+       >
+            <TextView
+                android:id="@+id/item_precipitation"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@drawable/item"
+                android:text="降水量"/>
+            <TextView
+                android:id="@+id/tv_precipitation"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:textStyle="bold"
+                android:layout_height="match_parent"
+                android:background="@drawable/item"
+                android:gravity="center"
+                android:text="10 C"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+      >
+            <TextView
+                android:id="@+id/item_atmosphere"
+                android:layout_width="0dp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@drawable/item"
+                android:text="大气压强"/>
+            <TextView
+                android:id="@+id/tv_atmosphere"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="match_parent"
+                android:background="@drawable/item"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="10 C"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+      >
+
+            <TextView
+                android:id="@+id/item_visibility"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@drawable/item"
+
+                android:text="能见度"/>
+            <TextView
+                android:id="@+id/tv_visibility"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:background="@drawable/item"
+                android:gravity="center"
+                android:text="10 C"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+       >
+            <TextView
+                android:id="@+id/item_cloudage"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@drawable/item"
+
+                android:text="云量"/>
+            <TextView
+                android:id="@+id/tv_cloudage"
+                android:layout_width="0dp"
+                android:textStyle="bold"
+                android:layout_weight="3"
+                android:layout_height="match_parent"
+                android:background="@drawable/item"
+                android:gravity="center"
+                android:text="10 C"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
