@@ -2,6 +2,12 @@ package com.example.ts7.weartherapplication;
 
 public class Weather {
 
+    public Weather(String cityname){
+        this.weatherCityName = cityname;
+        this.weatherState = "";
+        this.weatherTemperature = "";
+        this.weatherDate = "";
+    }
     @Override
     public String toString() {
         return "Weather{" +

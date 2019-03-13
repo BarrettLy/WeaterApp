@@ -4,16 +4,21 @@ package com.example.ts7.weartherapplication;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 
 /**
  * @FileName MainModel
@@ -28,38 +33,75 @@ import java.net.URLEncoder;
 
 public class MainModel {
 
-    private static final String LYTAG = "LiuYang";
+    public static final String TAG = "LY--MainModel";
+    private static final String LYTAG = "LY--MainModel";
+
     private static final String uid = "ec1243a04b4340ce8573b6f0dc5c73d3";
     private static final String BASE_URI = "https://free-api.heweather.com/s6/weather/now?location=";
+    private static final String CITY_URI = "https://search.heweather.net/top?group=world";
+    private static ArrayList<String> arrayListCity;
+    public MainModel(){
+
+    }
 
     private String resultData = "";
     public WeatherEntity mWeatherEntity = new WeatherEntity();
-
-   /* public MainModel() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URI)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-        mWeatherService = retrofit.create(WeatherService.class);
-        Log.d("LiuYang","MainModel");
-    }*/
-
+    public CityEntity mCityEntity = new CityEntity();
     public static final int SHOW_RESPONSE=0;//用于更新操作
-   /* private Handler handler=new Handler(){
-        public void handleMessage(Message msg){
-            //如果返现msg.what=SHOW_RESPONSE，则进行制定操作，如想进行其他操作，则在子线程里将SHOW_RESPONSE改变
-            switch (msg.what){
-                case SHOW_RESPONSE:
-                    WeatherEntity response=(WeatherEntity) msg.obj;
-                    //进行UI操作，将结果显示到界面上
-                    //responseText.setText(response);
-                    Log.d(LYTAG,"+++++++++++get -> "+response.toString());
-                    mWeatherEntity = response;
+    public static final int SHOW_CITY = 1;//用于更新城市列表
+
+
+
+    public void getCity(final Handler handler){
+        Log.d(TAG, "getCity: ");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpURLConnection connection = null;
+                try {
+                    URL url = null;
+                    try {
+                        url = new URL(CITY_URI+"&number=20"+"&key="+uid);
+                    }catch (MalformedURLException el){
+                        el.printStackTrace();
+                    }
+
+                    connection = (HttpURLConnection)url.openConnection();
+                    connection.setRequestMethod("GET");
+                    connection.setConnectTimeout(8000);
+                    connection.setReadTimeout(8000);
+
+                    InputStream in = connection.getInputStream();
+                    //下面对获取的输入流进行读取
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+                    StringBuilder response = new StringBuilder();
+                    String line;
+                    while ((line=bufferedReader.readLine()) !=null){
+                        response.append(line);
+                    }
+                    String city = response.toString();
+                    //Log.d(TAG, "run: "+city);
+                    if (city != null){
+                        Gson gson = new Gson();
+                        //解析城市列表
+                        mCityEntity = gson.fromJson(city,CityEntity.class);
+                    }
+                    Message message = new Message();
+                    message.what = SHOW_CITY;
+                    //将服务数据存放到Ｍｅｓｓａｇｅ中
+                    message.obj = mCityEntity;
+                    handler.sendMessage(message);
+                   // Log.d(TAG, "message: "+mCityEntity.toString());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }finally {
+                    if (connection != null){
+                        connection.disconnect();
+                    }
+                }
             }
-        }
-    };
-*/
+        }).start();
+    }
 
     public void getData(final String city,final Handler handler)  {
 
@@ -91,7 +133,7 @@ public class MainModel {
                         response.append(line);
                     }
 
-                    Log.d(LYTAG,"getData -> "+response.toString());
+                    //Log.d(LYTAG,"getData -> "+response.toString());
                     String wearhercity = response.toString();
 
                     if(wearhercity != null){
@@ -115,7 +157,39 @@ public class MainModel {
                 }
             }
         }).start();
+    }
+
+    public void saveCity(ArrayList<String> arrayList) {
+        FileEntity fileEntity = new FileEntity();
+        try {
+            fileEntity.write(arrayList);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
+
+    public void getSaveCity(WeatherAdapter weatherAdapter, ArrayList<String> weathersshow) {
+        Log.d(TAG, "getSaveCity: ");
+        ArrayList<String> saveCitylist = new ArrayList<>();
+        FileEntity fileEntity = new FileEntity();
+        try {
+            saveCitylist = fileEntity.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Iterator<String> iterator = saveCitylist.iterator();
+        while (iterator.hasNext()){
+            String line = iterator.next();
+            weathersshow.add(line);
+            weatherAdapter.addItem(line);
+        }
+    }
+}
+
+
+
+
+
 
 
 /*
@@ -235,4 +309,3 @@ public class MainModel {
                     }
                 });
     }*/
-}

@@ -10,37 +10,96 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class WeatherAdapter extends ArrayAdapter<Weather> {
     private int resourceId;
 
-    private static final String LYTAG = "LiuYang WeatherAdapter";
+    private static final String TAG = "LY--WeatherAdapter";
+    private static final String LYTAG = "LY--WeatherAdapter";
 
     private WeatherEntity weatherEntity = new WeatherEntity();
     private MainModel model = new MainModel();
-
+    private List<Weather> arrayListWeather;
+    private LayoutInflater inflater;
+    Handler handler;
     public WeatherAdapter(Context context,int textViewResourceId,List<Weather> objects){
         super(context,textViewResourceId,objects);
-
+        this.arrayListWeather = objects;
+        inflater = LayoutInflater.from(context);
         resourceId = textViewResourceId;
     }
 
     public static final int SHOW_RESPONSE=0;//用于更新操作
 
+    ///
 
+    Handler getHanderAdapter(){
+        return handler;
+    }
+    @Override
+    public int getCount() {
+        // TODO Auto-generated method stub
+        return arrayListWeather.size();
+    }
+
+    @Override
+    public Weather getItem(int position) {
+        // TODO Auto-generated method stub
+        Log.d(TAG, "getItem: "+position);
+        return arrayListWeather.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        // TODO Auto-generated method stub
+        return position;
+    }
+
+
+    ///
+
+    public void deleteItem(String cityname){
+        Log.d(TAG, "deleteItem: ");
+        //得到第一个可见item项的位置
+        Weather weather = new Weather(cityname);
+        for (int i = 0;i< arrayListWeather.size();i++){
+            if (arrayListWeather.get(i).getWeatherCityName().equals(weather.getWeatherCityName())){
+                arrayListWeather.remove(i);
+                View view = LayoutInflater.from(getContext()).inflate(resourceId,null,false);
+                Log.d(TAG, "deleteItem: Listview: ");
+                this.notifyDataSetChanged();
+            }
+        }
+        Log.d(TAG, "deleteItem: arraylist: "+arrayListWeather.size());
+    }
+
+    public void addItem(String cityname){
+        Log.d(TAG, "addItem: "+cityname.toString());
+
+        Weather weather = new Weather(cityname);
+        for (int i = 0;i< arrayListWeather.size();i++){
+            if (arrayListWeather.get(i).getWeatherCityName().equals(weather.getWeatherCityName())){
+                Log.d(TAG, "addItem: 城市已经存在");
+                return;
+            }
+        }
+        arrayListWeather.add(weather);
+        this.notifyDataSetChanged();
+    }
 
     @Override
     public View getView(int position,View convertView,ViewGroup parent){ //回调函数
+        Log.d(LYTAG, "getView: "+position);
         final Weather weather = getItem(position);  //获取当前项weather实例
 
         ViewHolder viewHolder = new ViewHolder();
-
-
 
         if(convertView == null){
             Log.d(LYTAG,"第一次创建convertView");
@@ -66,25 +125,23 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
             viewHolder.llWeather = (LinearLayout) convertView.findViewById(R.id.ll_weather);
             viewHolder.llDetail = (LinearLayout) convertView.findViewById(R.id.ll_detail);
 
-
             convertView.setTag(viewHolder); //将viewHolder存储在View中
-
         }else{
             Log.d(LYTAG,"复用convertView");
             viewHolder = (ViewHolder) convertView.getTag(); //重新获取ViewHolder
         }
 
-
         final ViewHolder finalViewHolder = viewHolder;
-        Handler handler=new Handler(){
+        handler=new Handler(){
             public void handleMessage(Message msg){
+                Log.d(LYTAG, "handleMessage: 得到数据");
                 //如果返现msg.what=SHOW_RESPONSE，则进行制定操作，如想进行其他操作，则在子线程里将SHOW_RESPONSE改变
                 switch (msg.what){
                     case SHOW_RESPONSE:
                         WeatherEntity response=(WeatherEntity) msg.obj;
                         //进行UI操作，将结果显示到界面上
                         //responseText.setText(response);
-                        Log.d(LYTAG+"MainHandleMessage",response.toString());
+                        Log.d(LYTAG,"更新数据");
                         weatherEntity = response;
 
                         finalViewHolder.tvwindsnowdrift.setText(weatherEntity.getHeWeather6().get(0).getNow().getWind_spd()+"");
@@ -98,34 +155,17 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
                         finalViewHolder.weatherDate.setText(weatherEntity.getHeWeather6().get(0).getUpdate().getLoc());
                         finalViewHolder.weatherTemperature.setText(weatherEntity.getHeWeather6().get(0).getNow().getTmp());
                         finalViewHolder.weatherState.setText(weatherEntity.getHeWeather6().get(0).getNow().getCond_txt());
-                        finalViewHolder.cityName.setText(weatherEntity.getHeWeather6().get(0).getBasic().getAdmin_area());
+                        finalViewHolder.cityName.setText(weatherEntity.getHeWeather6().get(0).getBasic().getLocation());
                         finalViewHolder.tvsendibletemperature.setText(weatherEntity.getHeWeather6().get(0).getNow().getFl());
-
                 }
             }
         };
 
-
-////////////////////////////////////////////////////////////////
+        Log.d(LYTAG,"城市：　"+weather.getWeatherCityName());
+        //从网络上获取指定的城市天气
         model.getData(weather.getWeatherCityName(),handler);
-        Log.d("AAA","ADAPT "+weather.getWeatherCityName());
-/*
-        if(weatherEntity.getHeWeather6().get(0) == null)
-            Log.d("AAA","ANULLLT ");
-        else Log.d(LYTAG," weatherEntity   ++"+weatherEntity.toString());*/
 
-
-        //Log.d(LYTAG,"  WeaEntity "+ weatherEntity.getHeWeather6().get(0).getNow().getWind_dir());
-////////////////////////////////////////////////////////////////////////
-        //viewHolder.tvwindsnowdrift.setText(weatherEntity.getHeWeather6().get(0).getNow().getWind_dir()+"");
-/*
-
-        viewHolder.cityName.setText(weather.getWeatherCityName());
-        viewHolder.weatherState.setText(weather.getWeatherState());
-        viewHolder.weatherTemperature.setText(weather.getWeatherTemperature());
-        viewHolder.weatherDate.setText(weather.getWeatherDate());
-*/
-
+//控制显示和隐藏
         final ViewHolder viewHolder1 = viewHolder;
         viewHolder.llWeather.setOnClickListener(new View.OnClickListener() {
 
@@ -161,6 +201,5 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
         TextView tvatmosphere;          //大气压强
         TextView tvvisibility;          //能见度
         TextView tvcloudage;            //云量
-
     }
 }

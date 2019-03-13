@@ -21,9 +21,6 @@ public class WeatherEntity {
         return HeWeather6;
     }
 
-    //public void setHeWeather6(List<HeWeather6Bean> HeWeather6) {
-    //    this.HeWeather6 = HeWeather6;
-    //}
 
     public static class HeWeather6Bean {
         /**
