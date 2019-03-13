@@ -20,7 +20,6 @@ public class FileEntity {
 
     void write(ArrayList<String> arrayList) throws IOException {
 
-
         String filename = "cityList.txt";
         File fullFilename = new File(extDir, filename);
 

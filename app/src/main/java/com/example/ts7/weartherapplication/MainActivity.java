@@ -12,12 +12,14 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -37,11 +39,10 @@ public class MainActivity extends AppCompatActivity implements ImainView{
     private ArrayList<String> weathersshow = new ArrayList<>();
     private WeatherAdapter adapter;
     private ListView listView;
-
     //选择展示城市菜单
     private void showSelectPopupMenu(View view) {
         // 这里的view代表popupMenu需要依附的view
-        PopupMenu popupMenu = new PopupMenu(MainActivity.this, view);
+         popupMenu= new PopupMenu(MainActivity.this, view);
 
         // 获取布局文件
         popupMenu.getMenuInflater().inflate(R.menu.menumain, popupMenu.getMenu());
@@ -72,13 +73,12 @@ public class MainActivity extends AppCompatActivity implements ImainView{
                 // 控件消失时的事件
             }
         });
-
     }
 
     //删除城市菜单
     private void showdeletePopupMenu(final View view) {
         // 这里的view代表popupMenu需要依附的view
-        PopupMenu popupMenu = new PopupMenu(MainActivity.this, view);
+       popupMenu = new PopupMenu(MainActivity.this, view);
         // 获取布局文件
         popupMenu.getMenuInflater().inflate(R.menu.menumain, popupMenu.getMenu());
         final Iterator<String> iterator = citylist.iterator();
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements ImainView{
                 while (iterator.hasNext()){
                     if (item.getTitle().equals(iterator.next())){
                         weathersshow.remove(item.getTitle().toString());
-                        Log.d(TAG, "onMenuItemClick: wethersshow"+weathersshow.toString());
+                        //Log.d(TAG, "onMenuItemClick: wethersshow"+weathersshow.toString());
                         adapter.deleteItem(item.getTitle().toString());
                     }
                 }
@@ -112,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements ImainView{
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -123,17 +122,27 @@ public class MainActivity extends AppCompatActivity implements ImainView{
 
         initWeather();
         initview();
-
-        mainPresenter.getSaveCity(adapter,weathersshow);
+        if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            mainPresenter.getSaveCity(adapter,weathersshow);
+        } else {
+            //提示用户开户权限   拍照和读写sd卡权限
+            String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            ActivityCompat.requestPermissions(MainActivity.this, perms, RESULT_CANCELED);
+        }
     }
 
-    @SuppressLint("ResourceType")
     void initview(){
         buttonSelectCity = (Button)findViewById(R.id.btn_select_city);
         buttonSelectCity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showSelectPopupMenu(v);
+            }
+        });
+        buttonSelectCity.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
             }
         });
         buttonDeleteCity = (Button)findViewById(R.id.btn_delete_city);
@@ -149,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements ImainView{
             public void onClick(View v) {
                 if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     mainPresenter.saveCity(weathersshow);
+                    Toast.makeText(MainActivity.this,"保存成功",Toast.LENGTH_SHORT).show();
                 } else {
                     //提示用户开户权限   拍照和读写sd卡权限
                     String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -160,7 +170,6 @@ public class MainActivity extends AppCompatActivity implements ImainView{
         listView = (ListView) findViewById(R.id.list_weather_item);
         adapter = new WeatherAdapter(MainActivity.this,R.layout.item_weather,weatherList);
         listView.setAdapter(adapter);
-
     }
 
 
@@ -180,6 +189,6 @@ public class MainActivity extends AppCompatActivity implements ImainView{
     @Override
     public void setCityListResule(ArrayList<String> arrayList) {
         citylist = arrayList;
-        Log.d(LYTAG, "setCityList: "+arrayList.toString());
+        //Log.d(LYTAG, "setCityList: "+arrayList.toString());
     }
 }

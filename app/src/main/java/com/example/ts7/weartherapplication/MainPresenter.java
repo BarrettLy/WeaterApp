@@ -25,7 +25,7 @@ public class MainPresenter {
                     //Log.d(TAG, "handleMessage: "+cityEntity.toString());
                     for (int i=0;i<cityEntity.getHeWeather6().get(0).getBasic().size();i++){
                         String cityname = cityEntity.getHeWeather6().get(0).getBasic().get(i).getLocation();
-                        Log.d(TAG, "handleMessage: cityname: "+cityname);
+                        //Log.d(TAG, "handleMessage: cityname: "+cityname);
                         arrayList.add(cityname);
                     }
                     imainView.setCityListResule(arrayList);
