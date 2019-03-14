@@ -158,16 +158,9 @@ public class MainActivity extends AppCompatActivity implements ImainView{
 
         Log.d(LYTAG," MainActivity onCreate");
 
-        initWeather();
-        initview();
-        if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            mainPresenter.getSaveCity(adapter,weathersshow);
-        } else {
-            //提示用户开户权限   拍照和读写sd卡权限
-            String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            ActivityCompat.requestPermissions(MainActivity.this, perms, RESULT_CANCELED);
-        }
 
+        initview();
+        initWeather();
         showProgressDialog();
     }
 
@@ -211,6 +204,13 @@ public class MainActivity extends AppCompatActivity implements ImainView{
     private void initWeather(){
         mainPresenter = new MainPresenter(this);
         mainPresenter.setCityList(citylist);
+        if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            mainPresenter.getSaveCity(adapter,weathersshow);
+        } else {
+            //提示用户开户权限   拍照和读写sd卡权限
+            String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            ActivityCompat.requestPermissions(MainActivity.this, perms, RESULT_CANCELED);
+        }
 
         /*  for(int i=0;i<1;i++){
             Weather one = new Weather("武汉","Cloudy","16 C","2018/11/15");

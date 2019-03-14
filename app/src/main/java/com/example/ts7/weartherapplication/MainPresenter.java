@@ -44,7 +44,7 @@ public class MainPresenter {
     public void setCityList(ArrayList<String> arrayList){
         Log.d(TAG, "setCityList: ");
         this.arrayList = arrayList;
-        mainModel.getCity(handler);
+        mainModel.getAllCity(handler);
     }
 
 

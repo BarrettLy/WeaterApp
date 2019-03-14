@@ -52,7 +52,7 @@ public class MainModel {
 
 
 
-    public void getCity(final Handler handler){
+    public void getAllCity(final Handler handler){
         Log.d(TAG, "getCity: ");
         new Thread(new Runnable() {
             @Override
@@ -103,7 +103,7 @@ public class MainModel {
         }).start();
     }
 
-    public void getData(final String city,final Handler handler)  {
+    public void getOneCity(final String city,final Handler handler)  {
 
         new Thread(new Runnable() {
             @Override

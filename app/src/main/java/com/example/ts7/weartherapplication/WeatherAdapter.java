@@ -163,7 +163,7 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
 
         Log.d(LYTAG,"城市：　"+weather.getWeatherCityName());
         //从网络上获取指定的城市天气
-        model.getData(weather.getWeatherCityName(),handler);
+        model.getOneCity(weather.getWeatherCityName(),handler);
 
 //控制显示和隐藏
         final ViewHolder viewHolder1 = viewHolder;
