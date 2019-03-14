@@ -44,6 +44,7 @@
 
         <LinearLayout
             android:layout_width="20dp"
+            android:paddingBottom="10dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
@@ -53,7 +54,7 @@
                 android:id="@+id/item_weathertemperature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:textColor="#000000"
                 android:textSize="30sp" />
@@ -73,12 +74,15 @@
         android:id="@+id/ll_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
         android:orientation="vertical"
         android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="2dp"
             android:orientation="horizontal"
             >
             <TextView
@@ -87,7 +91,7 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:textStyle="bold"
-                android:background="@drawable/item"
+                android:background="@drawable/linearitemx"
                 android:gravity="center"
                 android:text="体感温度" />
             <TextView
@@ -95,16 +99,18 @@
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:textStyle="bold"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/linearitemx"
                 android:layout_height="match_parent"
-                android:background="@drawable/item"
                 android:gravity="center"
                 android:text="10 C"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="2dp"
             android:orientation="horizontal"
             >
 
@@ -113,24 +119,26 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:background="@drawable/linearitemx"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:background="@drawable/item"
                 android:text="风向" />
             <TextView
                 android:id="@+id/tv_winddirection"
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/linearitemx"
                 android:textStyle="bold"
-                android:background="@drawable/item"
                 android:gravity="center"
                 android:text="10 C"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="2dp"
             android:orientation="horizontal"
             >
 
@@ -141,22 +149,24 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:background="@drawable/item"
+                android:background="@drawable/linearitemx"
                 android:text="风力" />
             <TextView
                 android:id="@+id/tv_windpower"
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="match_parent"
-                android:background="@drawable/item"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/linearitemx"
                 android:gravity="center"
                 android:textStyle="bold"
                 android:text="10 C"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="2dp"
             android:orientation="horizontal"
             >
             <TextView
@@ -166,7 +176,7 @@
                 android:textStyle="bold"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:background="@drawable/item"
+                android:background="@drawable/linearitemx"
                 android:text="风速" />
             <TextView
                 android:id="@+id/tv_windsnowdrift"
@@ -174,14 +184,16 @@
                 android:layout_weight="3"
                 android:textStyle="bold"
                 android:layout_height="match_parent"
-                android:background="@drawable/item"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/linearitemx"
                 android:gravity="center"
                 android:text="10 C"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_margin="2dp"
             android:layout_height="match_parent"
             android:orientation="horizontal"
         >
@@ -192,21 +204,23 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:background="@drawable/item"
+                android:background="@drawable/linearitemx"
                 android:text="相对湿度" />
             <TextView
                 android:id="@+id/tv_relativehumidity"
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="match_parent"
-                android:background="@drawable/item"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/linearitemx"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:text="10 C"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_margin="2dp"
             android:layout_height="match_parent"
             android:orientation="horizontal"
        >
@@ -217,7 +231,7 @@
                 android:textStyle="bold"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:background="@drawable/item"
+                android:background="@drawable/linearitemx"
                 android:text="降水量"/>
             <TextView
                 android:id="@+id/tv_precipitation"
@@ -225,14 +239,16 @@
                 android:layout_weight="3"
                 android:textStyle="bold"
                 android:layout_height="match_parent"
-                android:background="@drawable/item"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/linearitemx"
                 android:gravity="center"
                 android:text="10 C"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="2dp"
             android:orientation="horizontal"
       >
             <TextView
@@ -242,14 +258,15 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:background="@drawable/item"
+                android:background="@drawable/linearitemx"
                 android:text="大气压强"/>
             <TextView
                 android:id="@+id/tv_atmosphere"
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="match_parent"
-                android:background="@drawable/item"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/linearitemx"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:text="10 C"/>
@@ -257,7 +274,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_margin="2dp"
             android:layout_height="match_parent"
             android:orientation="horizontal"
       >
@@ -269,7 +287,7 @@
                 android:textStyle="bold"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:background="@drawable/item"
+                android:background="@drawable/linearitemx"
 
                 android:text="能见度"/>
             <TextView
@@ -278,13 +296,15 @@
                 android:layout_weight="3"
                 android:layout_height="match_parent"
                 android:textStyle="bold"
-                android:background="@drawable/item"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/linearitemx"
                 android:gravity="center"
                 android:text="10 C"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_margin="2dp"
             android:layout_height="match_parent"
             android:orientation="horizontal"
        >
@@ -295,8 +315,7 @@
                 android:textStyle="bold"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:background="@drawable/item"
-
+                android:background="@drawable/linearitemx"
                 android:text="云量"/>
             <TextView
                 android:id="@+id/tv_cloudage"
@@ -304,7 +323,8 @@
                 android:textStyle="bold"
                 android:layout_weight="3"
                 android:layout_height="match_parent"
-                android:background="@drawable/item"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/linearitemx"
                 android:gravity="center"
                 android:text="10 C"/>
         </LinearLayout>

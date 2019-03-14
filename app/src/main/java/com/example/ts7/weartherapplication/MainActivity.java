@@ -2,6 +2,7 @@ package com.example.ts7.weartherapplication;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements ImainView{
     private ArrayList<String> weathersshow = new ArrayList<>();
     private WeatherAdapter adapter;
     private ListView listView;
+    private View main;
+
     //选择展示城市菜单
     private void showSelectPopupMenu(View view) {
         // 这里的view代表popupMenu需要依附的view
@@ -78,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements ImainView{
     //删除城市菜单
     private void showdeletePopupMenu(final View view) {
         // 这里的view代表popupMenu需要依附的view
-       popupMenu = new PopupMenu(MainActivity.this, view);
+        popupMenu = new PopupMenu(MainActivity.this, view);
         // 获取布局文件
         popupMenu.getMenuInflater().inflate(R.menu.menumain, popupMenu.getMenu());
         final Iterator<String> iterator = citylist.iterator();
@@ -112,6 +115,41 @@ public class MainActivity extends AppCompatActivity implements ImainView{
     }
 
 
+    private void showProgressDialog() {
+        /* @setProgress 设置初始进度
+         * @setProgressStyle 设置样式（水平进度条）
+         * @setMax 设置进度最大值
+         */
+        final int MAX_PROGRESS = 100;
+        final ProgressDialog progressDialog =
+                new ProgressDialog(MainActivity.this);
+        progressDialog.setProgress(0);
+        progressDialog.setTitle("正在加载城市信息");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setMax(MAX_PROGRESS);
+        progressDialog.show();
+        /* 模拟进度增加的过程
+         * 新开一个线程，每个100ms，进度增加1
+         */
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int progress= 0;
+                while (progress < MAX_PROGRESS){
+                    try {
+                        Thread.sleep(100);
+                        progress++;
+                        progressDialog.setProgress(progress);
+                    } catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+                // 进度达到最大值后，窗口消失
+                progressDialog.cancel();
+            }
+        }).start();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -129,6 +167,8 @@ public class MainActivity extends AppCompatActivity implements ImainView{
             String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
             ActivityCompat.requestPermissions(MainActivity.this, perms, RESULT_CANCELED);
         }
+
+        showProgressDialog();
     }
 
     void initview(){
@@ -137,12 +177,6 @@ public class MainActivity extends AppCompatActivity implements ImainView{
             @Override
             public void onClick(View v) {
                 showSelectPopupMenu(v);
-            }
-        });
-        buttonSelectCity.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
             }
         });
         buttonDeleteCity = (Button)findViewById(R.id.btn_delete_city);
